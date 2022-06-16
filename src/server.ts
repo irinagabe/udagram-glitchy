@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
@@ -30,25 +30,25 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("/filteredimage", async (req, res) => {
-      let image_url = req.query.image_url;
-      if(!image_url){
-        res.status(400).send('Public URL is required!');
-      }
+  app.get("/filteredimage", async (req: Request, res: Response) => {
+    let { image_url }: { image_url: string } = req.query;
+      
+    if (!image_url) {
+      res.status(400).send('Public URL is required!');
+    }
 
-      let filtered_path = await filterImageFromURL(image_url);
+    let filtered_path: string = await filterImageFromURL(image_url);
 
-      res.sendFile(filtered_path);
-      res.on('finish', () => {
-        deleteLocalFiles([filtered_path]);
-      });
-    
-  })
+    res.status(200).sendFile(filtered_path);
+    res.on('finish', () => {
+      deleteLocalFiles([filtered_path]);
+    });
+  });
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
-    res.send("try GET /filteredimage?image_url={{}}")
+  app.get( "/", async ( req:Request, res: Response ) => {
+    res.status(200).send("try GET /filteredimage?image_url={{}}")
   } );
   
 
