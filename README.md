@@ -3,7 +3,7 @@
 It is a Node-Express application which runs a simple script to process images.
 
 **Try out the app:**
-[EB Application URL](http://udagram-proj-dev.us-east-1.elasticbeanstalk.com/)
+[EB Application Base URL](http://udagram-proj-dev.us-east-1.elasticbeanstalk.com/)
 
 # Sample Filtered Images
 
